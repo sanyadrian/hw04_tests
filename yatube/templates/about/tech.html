@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Технологии{% endblock %}
+{% block content %}
+{% comment %} Колонки с отступом сверху и снизу {% endcomment %}
+<div class="row">
+  <h1>
+  Использованные технологии
+  </h1></div>
+
+<p>Пытался структурировать HTML документ,<br>
+но очень тяжело пока применять все<br>
+полученные знания на практике.</p>
+  <aside class="col-12 col-md-3">
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">
+      <style> 
+        body{
+          font-size: 30px;
+          color:green;
+        }
+      </style>
+      <aside>
+      Python
+        <p><img src="{%static 'img/Python.png' %}" width="100" height="111"</p>
+      </li>
+      <li class="list-group-item">
+        Django
+        <p><img src="{%static 'img/Django.jpeg' %}" width="100" height="111"</p>
+      </li>
+    </ul>
+  </aside>
+  {% comment %}
+    Статья  
+    Займет всю ширину блока на мобильном
+    и 75% при размерах экрана ≥768px
+  {% endcomment %}
+  <article class="col-12 col-md-9">
+    <p style="color:red">
+    Текст страницы "Технологии"</p>
+  </article>
+
+{% endblock %}

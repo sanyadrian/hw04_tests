@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}
+  <h1>Последние обновления</h1>
+{% endblock %}
+{% block content %}  
+  <!-- класс py-5 создает отступы сверху и снизу блока -->
+  <div class="container py-5">
+    {% for post in page_obj %}
+    {{ page }}
+      <ul>
+        <li>
+          <h5>Автор: {{ post.author.get_full_name }}</h5>
+        </li>
+        <li>
+          <i>Дата публикации: {{ post.pub_date|date:"d E Y" }}</i>
+        </li>
+      </ul>
+      <p>{{ post.text }}</p>
+      {% if post.group %} 
+        <a href="{% url 'post:group_posts' post.group.slug %}">все записи группы</a>{% endif %}
+      {% if not forloop.last %}<hr>{% endif %}
+    {% endfor %}
+  </div>
+  {% include 'posts/includes/paginator.html' %}  
+{% endblock %}
+
