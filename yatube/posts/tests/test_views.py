@@ -31,7 +31,6 @@ class PostPagesTests(TestCase):
         )
 
     def setUp(self):
-        # self.user = User.objects.create_user(username='Yes')
         self.authorized_client = Client()
         self.authorized_client.force_login(self.user)
 
@@ -64,7 +63,7 @@ class PostPagesTests(TestCase):
         post_text = post_obj_page.text
         post_group = post_obj_page.group
         post_author = post_obj_page.author
-        self.assertEqual(post_text, 'Тестовый пост')
+        self.assertEqual(post_text, self.post.text)
         self.assertEqual(post_group, self.group)
         self.assertEqual(post_author, self.user)
 
@@ -82,10 +81,10 @@ class PostPagesTests(TestCase):
         group_title_0 = first_object_group.title
         group_slug_0 = first_object_group.slug
         group_description_0 = first_object_group.description
-        self.assertEqual(post_text_0, 'Тестовый пост')
+        self.assertEqual(post_text_0, self.post.text)
         self.assertEqual(post_author_0, 'auth')
         self.assertEqual(post_group_0, 'Тестовая группа')
-        self.assertEqual(group_title_0, 'Тестовая группа')
+        self.assertEqual(group_title_0, PostPagesTests.group.title)
         self.assertEqual(group_slug_0, PostPagesTests.group.slug)
         self.assertEqual(group_description_0, PostPagesTests.group.description)
         print(first_object_group)

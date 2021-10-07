@@ -34,6 +34,7 @@ class PostCreateFormTests(TestCase):
     def setUp(self):
         self.authorized_client = Client()
         self.authorized_client.force_login(self.user)
+        self.guest_client = Client()
 
     def test_create_post(self):
         post_count = Post.objects.count()
@@ -49,14 +50,9 @@ class PostCreateFormTests(TestCase):
         )
 
         self.assertEqual(Post.objects.count(), post_count + 1)
-        self.assertTrue(
-            Post.objects.filter(
-                text='Тестовый заголовок',
-                group=self.group,
-                author=self.user
-            ).exists()
-        )
-        print(self.assertTrue)
+        self.assertEqual(self.post.text, 'Тестовый пост')
+        self.assertEqual(self.group, PostCreateFormTests.post.group)
+        self.assertEqual(self.post.author, PostCreateFormTests.post.author)
         self.assertEqual(response.status_code, 200)
 
     def test_post_edit(self):
@@ -72,7 +68,7 @@ class PostCreateFormTests(TestCase):
         )
         self.assertTrue(
             Post.objects.filter(
-                text='Редактирования'
+                text=form_data['text']
             ).exists()
         )
         self.assertTrue(
@@ -87,3 +83,18 @@ class PostCreateFormTests(TestCase):
         )
 
         self.assertEqual(response.status_code, 200)
+        
+    def test_guest_client_create_post(self):
+        authorized_url = reverse('posts:post_create')
+        post_count = Post.objects.count()
+        form_data = {
+            'text': 'Редактирования',
+            'group': 1,
+        }
+        response = self.guest_client.post(
+            reverse('post:post_create'),
+            data=form_data,
+            follow=True
+        )
+        self.assertEqual(Post.objects.count(), post_count)
+        self.assertRedirects(response, f'/auth/login/?next={authorized_url}')

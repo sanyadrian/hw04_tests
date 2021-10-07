@@ -1,4 +1,5 @@
 from django.test import TestCase, Client
+from django.urls import reverse
 
 
 class StaticURLTests(TestCase):
@@ -18,15 +19,12 @@ class StaticURLTests(TestCase):
     def setUp(self):
         self.guest_client = Client()
 
-    def test_about_author(self):
-        guest_client = Client()
-        response = guest_client.get('/about/author/')
-        self.assertEqual(response.status_code, 200)
-
-    def setUp(self):
-        self.guest_client = Client()
-
-    def test_technology(self):
-        guest_client = Client()
-        response = guest_client.get('/about/tech/')
-        self.assertEqual(response.status_code, 200)
+    def test_about_author_tech(self):
+        templates_name = {
+            reverse('about:author'): 200,
+            reverse('about:tech'): 200
+        }
+        for reverse_name, status_code in templates_name.items():
+            with self.subTest(reverse_name=reverse_name):
+                response = self.guest_client.get(reverse_name)
+                self.assertEqual(response.status_code, status_code)
