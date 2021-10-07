@@ -83,7 +83,7 @@ class PostCreateFormTests(TestCase):
         )
 
         self.assertEqual(response.status_code, 200)
-        
+
     def test_guest_client_create_post(self):
         authorized_url = reverse('posts:post_create')
         post_count = Post.objects.count()
