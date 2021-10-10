@@ -50,7 +50,7 @@ class PostCreateFormTests(TestCase):
         )
 
         self.assertEqual(Post.objects.count(), post_count + 1)
-        self.assertEqual(self.post.text, 'Тестовый пост')
+        self.assertEqual(self.post.text, PostCreateFormTests.post.text)
         self.assertEqual(self.group, PostCreateFormTests.post.group)
         self.assertEqual(self.post.author, PostCreateFormTests.post.author)
         self.assertEqual(response.status_code, 200)
@@ -85,7 +85,6 @@ class PostCreateFormTests(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_guest_client_create_post(self):
-        authorized_url = reverse('posts:post_create')
         post_count = Post.objects.count()
         form_data = {
             'text': 'Редактирования',
@@ -97,4 +96,6 @@ class PostCreateFormTests(TestCase):
             follow=True
         )
         self.assertEqual(Post.objects.count(), post_count)
-        self.assertRedirects(response, f'/auth/login/?next={authorized_url}')
+        self.assertRedirects(
+            response, reverse('users:login') + '?next=/create/'
+        )

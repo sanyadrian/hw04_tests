@@ -82,8 +82,8 @@ class PostPagesTests(TestCase):
         group_slug_0 = first_object_group.slug
         group_description_0 = first_object_group.description
         self.assertEqual(post_text_0, self.post.text)
-        self.assertEqual(post_author_0, 'auth')
-        self.assertEqual(post_group_0, 'Тестовая группа')
+        self.assertEqual(post_author_0, PostPagesTests.user.username)
+        self.assertEqual(post_group_0, PostPagesTests.group.title)
         self.assertEqual(group_title_0, PostPagesTests.group.title)
         self.assertEqual(group_slug_0, PostPagesTests.group.slug)
         self.assertEqual(group_description_0, PostPagesTests.group.description)
