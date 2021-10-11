@@ -189,18 +189,6 @@ class PaginatorViewsTest(TestCase):
             description='Тестовая группа',
         )
 
-        cls.post = 1
-        cls.post = 2
-        cls.post = 3
-        cls.post = 4
-        cls.post = 5
-        cls.post = 6
-        cls.post = 7
-        cls.post = 8
-        cls.post = 9
-        cls.post = 10
-        cls.post = 11
-        cls.post = 12
         cls.post = 13
         for cls.post in range(13):
             cls.post = Post.objects.create(

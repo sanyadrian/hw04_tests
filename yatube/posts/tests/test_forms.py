@@ -91,11 +91,13 @@ class PostCreateFormTests(TestCase):
             'group': 1,
         }
         response = self.guest_client.post(
-            reverse('post:post_create'),
+            reverse('posts:post_create'),
             data=form_data,
             follow=True
         )
         self.assertEqual(Post.objects.count(), post_count)
         self.assertRedirects(
-            response, reverse('users:login') + '?next=/create/'
+            response, reverse('users:login') + '?next=' + reverse(
+                'posts:post_create'
+            )
         )
